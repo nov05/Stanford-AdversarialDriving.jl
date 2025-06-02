@@ -1,6 +1,5 @@
 name = "AdversarialDriving"
-# uuid = "0f7eb3e9-d51f-47f4-b915-6157e1c8ce29"  ## changed by nov05
-uuid = "b0df4e1a-129a-4f30-854a-a9672dfa1df1"
+uuid = "0f7eb3e9-d51f-47f4-b915-6157e1c8ce29" 
 authors = ["Anthony Corso <anthonycorso92@gmail.com>"]
 version = "0.1.0"
 
