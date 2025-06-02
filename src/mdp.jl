@@ -126,12 +126,8 @@ Distributions.logpdf(mdp::AdversarialDrivingMDP, as::Vector) = sum([logpdf(mdp, 
 function step_scene(mdp::AdversarialDrivingMDP, s::Scene, actions::Vector{Disturbance}, rng::AbstractRNG = Random.GLOBAL_RNG)
     entities = []
 
-    # Add noise in SUT                              ## nov05
-    update_adversary!(sut(mdp), actions[1], s)      ## nov05
-
     # Loop through the adversaries and apply the instantaneous aspects of their disturbance
-    # for (adversary, action) in zip(adversaries(mdp), actions)       ## nov05
-    for (adversary, action) in zip(adversaries(mdp), actions[2:end])  ## nov05
+    for (adversary, action) in zip(adversaries(mdp), actions)       
         update_adversary!(adversary, action, s)
     end
 
@@ -139,12 +135,7 @@ function step_scene(mdp::AdversarialDrivingMDP, s::Scene, actions::Vector{Distur
     for (i, veh) in enumerate(s)
         m = model(mdp, veh.id)
         observe!(m, s, mdp.roadway, veh.id)
-        # a = rand(rng, m)                 ## nov05
-        if typeof(m.idm) <: MPCDriver
-            a = rand(rng, m, m.idm)
-        else
-            a = rand(rng, m)
-        end                                ## nov05
+        a = rand(rng, m)                 
         bv = Entity(propagate(veh, a, mdp.roadway, mdp.dt), veh.def, veh.id)
         !end_of_road(bv, mdp.roadway, mdp.end_of_road) && push!(entities, bv)
     end
