@@ -150,7 +150,7 @@ function AutomotiveSimulator.propagate(veh::Entity{BlinkerState, D, I}, action::
         end
     end
 
-    # starting_lane = laneid(vs)  ## nov05
+    starting_lane = laneid(vs)  
 
     # Update the kinematics of the vehicle (don't allow v < 0)
     vs_entity = Entity(vs, veh.def, veh.id)
@@ -159,7 +159,7 @@ function AutomotiveSimulator.propagate(veh::Entity{BlinkerState, D, I}, action::
     # Set the blinker state and return
     new_blink = action.toggle_blinker ? !blinker(veh) : blinker(veh)
     bs = BlinkerState(vs, new_blink, goals(veh), action.noise)
-    # @assert starting_lane == laneid(bs)  ## nov05
+    @assert starting_lane == laneid(bs)  
     bs
 end
 
